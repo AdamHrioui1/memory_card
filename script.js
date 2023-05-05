@@ -86,8 +86,10 @@ let matches_4x4 = {
 
 let Array_4x4 = new Array(16).fill('')
 let two_selected_cards = []
-let select_counter = 0
+let score = 0
 let matched_cards_counter = 0
+let shuffled_array_4x4 = shuffleArray(imgs_4x4)
+let cards_wrapper = document.getElementById('cards_wrapper')
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -97,22 +99,21 @@ function shuffleArray(array) {
     return array;
 }
 
-let shuffled_array_4x4 = shuffleArray(imgs_4x4)
-let cards_wrapper = document.getElementById('cards_wrapper')
 
 let selectCard = (e) => {
+    showScore(score)
     let id = parseInt(e.currentTarget.id)
     
-    select_counter++;
+    score++;
     two_selected_cards.push(id)
     
     let selectedCard = document.getElementById(id)
     selectedCard.classList.add('flipped')
 
-    if(select_counter % 2 === 0) {
+    if(score % 2 === 0) {
         if(isCardsMatches(two_selected_cards[0], two_selected_cards[1])) {
             matched_cards_counter++;
-            two_selected_cards.map((card, i) => {
+            two_selected_cards.map((card) => {
                 let selectedCard = document.getElementById(card)
                 selectedCard.classList.add('flipped')
                 selectedCard.removeEventListener('click', selectCard, true)
@@ -165,14 +166,37 @@ let flipAllCards = () => {
         cards.forEach((c) => {
             c.classList.remove('flipped')
         })
+
+        timer()
     }, 3000)
 }
 
-let youWin = () => {
+let timer = () => {
+    let time = 0;
+    let intervalId = setInterval(() => {
+        time++
+        showTimer(time)
+        if (youWin(time)) {
+            clearInterval(intervalId);
+        }
+    }, 1000);
+}
+
+let showScore = (score) => document.getElementById('score').innerText = 'Score: ' + score
+
+let showTimer = (time) => document.getElementById('time').innerText = 'Time: ' + time
+
+let youWin = (time) => {
     if(matched_cards_counter === 8) {
         let container = document.getElementById('container')
-        container.innerHTML = "<h1>You win!</h1>"
+        container.innerHTML = `
+            <h1>You win!</h1>
+            <h1>Score: ${score}</h1>
+            <h1>Time: ${time}</h1>
+        `
+        return true
     }
+    return false;
 }
 
 let isCardsMatches = (card1, card2) => matches_4x4[card1] === card2

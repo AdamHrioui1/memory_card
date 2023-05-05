@@ -11,6 +11,7 @@ body, .container {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .cards_wrapper {
@@ -81,4 +82,22 @@ body, .container {
 }
 .card.flipped > .back {
     transform: perspective(200px) rotateY(180deg);
+}
+
+.score_time_container {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 100vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 10px;
+    background-color: #000;
+    color: #fff;
+
+    z-index: 1;
 }
