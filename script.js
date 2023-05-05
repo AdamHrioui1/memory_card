@@ -1,16 +1,12 @@
-
-let Array_4x4 = new Array(16).fill('')
 let two_selected_cards = []
 let score = 0
 let matched_cards_counter = 0
-// let shuffled_array = shuffleArray(imgs_4x4)
 let cards_wrapper = document.getElementById('cards_wrapper')
 let size;
 
 let chooseOne = () => {
     let btn_4x4 = document.getElementById('btn_4x4')
     let btn_6x6 = document.getElementById('btn_6x6')
-
 
     btn_4x4.addEventListener('click', () => {
         size = 4
@@ -140,5 +136,5 @@ let isCardsMatches = (card1, card2, size) => {
     if(size === 4) return matches_4x4[card1] === card2 
     else return matches_6x6[card1] === card2 
 }
-// displayCards()
+
 chooseOne()
