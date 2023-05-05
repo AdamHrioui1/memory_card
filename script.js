@@ -1,95 +1,26 @@
-let imgs_4x4 = [
-    {
-        id: 0,
-        img: 'https://images.pexels.com/photos/13445143/pexels-photo-13445143.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 1,
-        img: 'https://images.pexels.com/photos/12101739/pexels-photo-12101739.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 2,
-        img: 'https://images.pexels.com/photos/14744772/pexels-photo-14744772.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 3,
-        img: 'https://images.pexels.com/photos/16247029/pexels-photo-16247029.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
-    },
-    {
-        id: 4,
-        img: 'https://images.pexels.com/photos/16284431/pexels-photo-16284431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 5,
-        img: 'https://images.pexels.com/photos/15031194/pexels-photo-15031194.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 6,
-        img: 'https://images.pexels.com/photos/16668378/pexels-photo-16668378.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 7,
-        img: 'https://images.pexels.com/photos/16596851/pexels-photo-16596851.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 8,
-        img: 'https://images.pexels.com/photos/13445143/pexels-photo-13445143.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 9,
-        img: 'https://images.pexels.com/photos/12101739/pexels-photo-12101739.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 10,
-        img: 'https://images.pexels.com/photos/14744772/pexels-photo-14744772.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 11,
-        img: 'https://images.pexels.com/photos/16247029/pexels-photo-16247029.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
-    },
-    {
-        id: 12,
-        img: 'https://images.pexels.com/photos/16284431/pexels-photo-16284431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 13,
-        img: 'https://images.pexels.com/photos/15031194/pexels-photo-15031194.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 14,
-        img: 'https://images.pexels.com/photos/16668378/pexels-photo-16668378.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-    {
-        id: 15,
-        img: 'https://images.pexels.com/photos/16596851/pexels-photo-16596851.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    },
-];
-
-let matches_4x4 = {
-    0: 8,
-    1: 9,
-    2: 10,
-    3: 11,
-    4: 12,
-    5: 13,
-    6: 14,
-    7: 15,
-    8: 0,
-    9: 1,
-    10: 2,
-    11: 3,
-    12: 4,
-    13: 5,
-    14: 6,
-    15: 7
-}
 
 let Array_4x4 = new Array(16).fill('')
 let two_selected_cards = []
 let score = 0
 let matched_cards_counter = 0
-let shuffled_array_4x4 = shuffleArray(imgs_4x4)
+// let shuffled_array = shuffleArray(imgs_4x4)
 let cards_wrapper = document.getElementById('cards_wrapper')
+let size;
+
+let chooseOne = () => {
+    let btn_4x4 = document.getElementById('btn_4x4')
+    let btn_6x6 = document.getElementById('btn_6x6')
+
+
+    btn_4x4.addEventListener('click', () => {
+        size = 4
+        displayCards(shuffleArray(imgs_4x4), 4)
+    })
+    btn_6x6.addEventListener('click', () => {
+        size = 6
+        displayCards(shuffleArray(imgs_6x6), 6)
+    })
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -111,8 +42,9 @@ let selectCard = (e) => {
     selectedCard.classList.add('flipped')
 
     if(score % 2 === 0) {
-        if(isCardsMatches(two_selected_cards[0], two_selected_cards[1])) {
+        if(isCardsMatches(two_selected_cards[0], two_selected_cards[1], size)) {
             matched_cards_counter++;
+            console.log(matched_cards_counter)
             two_selected_cards.map((card) => {
                 let selectedCard = document.getElementById(card)
                 selectedCard.classList.add('flipped')
@@ -136,15 +68,20 @@ let selectCard = (e) => {
     youWin()
 }
 
-let displayCards = () => {
-    for (let i = 0; i < shuffled_array_4x4.length; i++) {
+let displayCards = (shuffled_array, size) => {
+    document.getElementById('btns_wrapper').style.display = 'none'
+
+    for (let i = 0; i < shuffled_array.length; i++) {
         let card = document.createElement('div')
         card.setAttribute('class', 'card')
-        card.setAttribute('id', shuffled_array_4x4[i].id)
+        card.setAttribute('id', shuffled_array[i].id)
+
+        if(size === 4) card.classList.add('four')
+        if(size === 6) card.classList.add('six')
 
         card.innerHTML = `
             <div class="front">
-                <img src=${shuffled_array_4x4[i].img} alt="">
+                <img src=${shuffled_array[i].img} alt="">
             </div>
             <div class="back">${i}</div>
         `
@@ -184,20 +121,24 @@ let timer = () => {
 
 let showScore = (score) => document.getElementById('score').innerText = 'Score: ' + score
 
-let showTimer = (time) => document.getElementById('time').innerText = 'Time: ' + time
+let showTimer = (time) => document.getElementById('time').innerText = 'Time: ' + time+ ' sec'
 
 let youWin = (time) => {
-    if(matched_cards_counter === 8) {
+    if(matched_cards_counter === size**2 / 2) {
         let container = document.getElementById('container')
         container.innerHTML = `
             <h1>You win!</h1>
             <h1>Score: ${score}</h1>
-            <h1>Time: ${time}</h1>
+            <h1>Time: ${time} ec</h1>
         `
         return true
     }
     return false;
 }
 
-let isCardsMatches = (card1, card2) => matches_4x4[card1] === card2
-displayCards()
+let isCardsMatches = (card1, card2, size) => {
+    if(size === 4) return matches_4x4[card1] === card2 
+    else return matches_6x6[card1] === card2 
+}
+// displayCards()
+chooseOne()

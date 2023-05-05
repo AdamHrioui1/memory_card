@@ -12,6 +12,8 @@ body, .container {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    user-select: none;
 }
 
 .cards_wrapper {
@@ -47,6 +49,15 @@ body, .container {
     overflow: hidden;
 }
 
+.card.four {
+    width: 25%;
+    height: 25%;
+}
+.card.six {
+    width: 15%;
+    height: 15%;
+}
+
 .front, .back {
     position: absolute;
     top: 0;
@@ -73,7 +84,8 @@ body, .container {
     transform: perspective(200px) rotateY(-180deg);
 }
 .back {
-    background-color: #a2ffff;
+    background-color: #000;
+    color: #fff;
     transform: perspective(200px) rotateY(0deg);
 }
 
@@ -100,4 +112,33 @@ body, .container {
     color: #fff;
 
     z-index: 1;
+}
+
+.btns_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #000;
+}
+
+.btns_wrapper button {
+    padding: 40px;
+    margin: 10px;
+
+    background-color: #000;
+    border-radius: 10px;
+    color: #fff;
+    outline: none;
+    border: none;
+
+    font-weight: 700;
+    cursor: pointer;
 }
