@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, .container {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards_wrapper {
+    max-width: 600px;
+    width: 100vw;
+    max-height: 600px;
+    height: 100vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    border: 1px solid #fff;
+}
+
+.card {
+    position: relative;
+    width: 25%;
+    height: 25%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #fff;
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 24px;
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.front, .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    backface-visibility: hidden;
+    transition: .4s all ease-in-out;
+}
+
+.front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.front {
+    transform: perspective(200px) rotateY(-180deg);
+}
+.back {
+    background-color: #a2ffff;
+    transform: perspective(200px) rotateY(0deg);
+}
+
+.card.flipped > .front {
+    transform: perspective(200px) rotateY(0deg);
+}
+.card.flipped > .back {
+    transform: perspective(200px) rotateY(180deg);
+}
